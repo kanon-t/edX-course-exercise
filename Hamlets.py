@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 from collections import Counter
 
-def count_words_fast(text):
+def count_words_fast(text: str) -> Counter:
     text = text.lower()
     skips = [".", ",", ";", ":", "'", '"', "\n", "\\n", "!", "?", "(", ")"]
     for ch in skips:
@@ -11,9 +11,9 @@ def count_words_fast(text):
     word_counts = Counter(text.split(" "))
     return word_counts
 
-def word_stats(word_counts):
+def word_stats(word_counts: Counter):
     num_unique = len(word_counts)
-    counts = word_counts.values()
+    counts = dict(word_counts)
     return num_unique, counts
 
 
@@ -25,9 +25,10 @@ Instructions
 Read in the data as a pandas dataframe using pd.read_csv. Use the index_col argument to set the first column in the csv file as the index for the dataframe. 
 '''
 
-hamlets = '/Users/Kanon/Desktop/Coding/Python/3.2/hamlets.csv'    
-df = pd.read_csv(hamlets, index_col=0)
-print(df)
+def exercise_1():
+    file_name = 'hamlets.csv'
+    df = pd.read_csv(file_name, index_col=0)
+    print(df)
 
 
 '''
@@ -42,17 +43,24 @@ word, consisting of each unique word in text.
 count, consisting of the number of times each word in word is included in the text.
 '''
 
-#language, text = hamlets.iloc[0]
+def exercise_2():
+    file_name = 'hamlets.csv'
+    df = pd.read_csv(file_name, index_col=0)
+    
+    df_languages = df['language']
+    df_texts = df['text']
+    
+    for language_key in df_languages.keys():
+        language_name = df_languages[language_key]
+        text = df_texts[language_key]
+    
+        num_unique, word_counts = word_stats(count_words_fast(text))
+    
+        print(f'Language name: {language_name}')
+        print(f' - Unique words: {num_unique}')
+        print(f' - Hamlet mentioned {word_counts["hamlet"]} times.\n')
 
-counted_text = count_words_fast(text)
-#counted_text = {}
 
-for language in df:
-    for word in text:
-        text = str(df['text'])
-        #num_unique, counts = word_stats(count_words_fast(text))
-        data = pd.DataFrame({
-            "word": list(counted_text.keys()),
-            "count": list(counted_text.values())})
+if __name__ == '__main__':
+    exercise_2()
 
-print(counted_text)
