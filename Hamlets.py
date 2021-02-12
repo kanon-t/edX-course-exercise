@@ -42,6 +42,8 @@ word, consisting of each unique word in text.
 count, consisting of the number of times each word in word is included in the text.
 '''
 
+#language, text = hamlets.iloc[0]
+
 counted_text = count_words_fast(text)
 #counted_text = {}
 
